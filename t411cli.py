@@ -6,9 +6,10 @@ from API import ConnectionError, ServiceError, APIError
 import functions
 import argparse
 
+
 def get_args_parser():
     parser = argparse.ArgumentParser(prog='t411')
-    #group = parser.add_mutually_exclusive_group(required=True)
+    # group = parser.add_mutually_exclusive_group(required=True)
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
 
     search = subparsers.add_parser('search', help='search for a torrent')
@@ -58,7 +59,6 @@ def main():
         return
     api = T411API()
 
-
     try:
         api.connect(CONF['account']['username'], CONF['account']['password'])
     except ConnectionError as e:
@@ -70,6 +70,7 @@ def main():
             ftab[args.command](api, CONF, args)
         except APIError as e:
             print('[Error] API failed :', e)
+
 
 if __name__ == '__main__':
     try:
