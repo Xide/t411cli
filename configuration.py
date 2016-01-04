@@ -1,7 +1,7 @@
-import os
-from os.path import expanduser
 import configparser
+import os
 from getpass import getpass
+from os.path import expanduser
 
 CONF = None
 
@@ -87,14 +87,14 @@ def from_env(username=None, password=None):
     """
     global CONF
     home = expanduser("~")
-    if os.access('%s/.local/share/t411cli.conf' % home, os.R_OK | os.F_OK):
-        conf = Configuration.load('%s/.local/share/t411cli.conf' % home)
+    if os.access('%s/.config/t411cli.conf' % home, os.R_OK | os.F_OK):
+        conf = Configuration.load('%s/.config/t411cli.conf' % home)
     elif os.access('/etc/t411cli.conf', os.F_OK | os.R_OK):
-        conf = Configuration.load('%s/.local/share/t411cli.conf' % home)
+        conf = Configuration.load('/etc/t411cli.conf' % home)
     else:
         print('Configuration not found')
         conf = conf_generator(username, password)
-        with open('%s/.local/share/t411cli.conf' % home, 'w') as fp:
+        with open('%s/.config/t411cli.conf' % home, 'w') as fp:
             conf.write(fp)
 
     CONF = conf
