@@ -1,6 +1,3 @@
-from distutils.core import setup
-
-
 import codecs
 import os.path
 import re
@@ -9,6 +6,15 @@ try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
+
+long_description = ''
+
+try:
+    import pypandoc
+
+    long_description = pypandoc.convert('README.md', 'rst')
+except:
+    pass
 
 
 def fpath(name):
@@ -31,7 +37,7 @@ setup(
         name='t411cli',
         version=grep('__version__'),
         description='Lightweight command line interface for T411',
-        long_description=read(fpath('README.md')),
+        long_description=long_description,
         url='https://github.com/Xide/t411cli',
         author='Germain Gau',
         author_email='germain.gau@gmail.com',
