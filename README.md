@@ -31,7 +31,7 @@ pip install -r requirements.txt
 Quick Start
 -------------
 
-At first run, the soft will ask for your T411 credentials, simply type them once and they will be stored under ``` /home/$USER/.config/t411cli.conf ``` ( See [Configuration](#Configuration) section for more details.
+At first run, the soft will ask for your T411 credentials, simply type them once and they will be stored under ``` /home/$USER/.config/t411cli.conf ``` (See [Configuration](#Configuration) section for more details.)
 
 **t411cli** is composed of three main commands:
 
