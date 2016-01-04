@@ -1,5 +1,6 @@
 from distutils.core import setup
 
+
 import codecs
 import os.path
 import re
@@ -37,7 +38,7 @@ setup(
         license='',
         packages=['t411cli'],
         entry_points={
-            'console_scripts': ['t411cli=t411cli.t411cli:main'],
+            'console_scripts': ['t411=t411cli.t411cli:main'],
         },
         zip_safe=False,
         test_suite='tests',
