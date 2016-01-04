@@ -21,7 +21,6 @@ def details(api, conf, args):
 
 def download(api, conf, args):
     fname = api.download(args.torrentID,
-                         filename=str(args.torrentID),
                          base=conf['config']['torrent_folder'])
     print('Torrent %s saved.' % fname)
     if args.cmd:

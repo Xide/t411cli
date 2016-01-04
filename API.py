@@ -1,6 +1,8 @@
 import requests
 import os
 
+import helpers
+
 API_URL = 'http://api.t411.in'
 
 
@@ -95,7 +97,7 @@ class T411API:
         """
         if not filename:
             details = self.details(torrent_id)
-            filename = details['name']
+            filename = helpers.sanitize(details['name'])
         if not base:
             base = os.getcwd()
         if not filename.endswith('.torrent'):
