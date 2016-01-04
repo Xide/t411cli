@@ -89,6 +89,7 @@ By default, your configuration will be loaded or stored from:
 You can also put a global configuration in the ```/etc/t411cli.conf``` file
 
 The tool configuration is split in two parts:
+
 **Account**
 > Section containing account information : username and password
 
