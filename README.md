@@ -36,11 +36,11 @@ At first run, the soft will ask for your T411 credentials, simply type them once
 **t411cli** is composed of three main commands:
 
 > **search**
-	> Command used to browse available torrents.
+> Command used to browse available torrents.
 > **details**
-	> Get details for a specific torrent
+> Get details for a specific torrent
 > **download**
-	> Download selected torrent to filesystem
+> Download selected torrent to filesystem
 
 
 
