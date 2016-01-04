@@ -10,13 +10,14 @@ from API import ConnectionError, ServiceError, APIError
 import functions
 import argparse
 
+
 def get_args_parser():
     """
     Get command line argument parser, crafted with argparse module
     :return: parser object
     """
     parser = argparse.ArgumentParser(prog='t411')
-    #group = parser.add_mutually_exclusive_group(required=True)
+    # group = parser.add_mutually_exclusive_group(required=True)
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
 
     search = subparsers.add_parser('search', help='search for a torrent')
@@ -84,6 +85,7 @@ def main():
             ftab[args.command](api, CONF, args)
         except APIError as e:
             print('[Error] API failed :', e)
+
 
 if __name__ == '__main__':
     try:

@@ -2,10 +2,11 @@ import os
 from os.path import expanduser
 import configparser
 from getpass import getpass
+
 CONF = None
 
-class Configuration:
 
+class Configuration:
     @staticmethod
     def load(path: str):
         global CONF
@@ -32,7 +33,7 @@ class Configuration:
             assert 'account' in CONF, 'Invalid configuration file : account informations section is missing'
 
             for entry in ['password', 'username']:
-                assert entry in CONF['account'].keys(),\
+                assert entry in CONF['account'].keys(), \
                     'Section account entry missing : %s' % entry
 
             if not CONF['account']['username'] or \

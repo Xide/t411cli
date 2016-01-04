@@ -1,7 +1,10 @@
 import requests
 import os
 
+import helpers
+
 API_URL = 'http://api.t411.in'
+
 
 class APIError(Exception):
     """
@@ -10,12 +13,14 @@ class APIError(Exception):
     """
     pass
 
+
 class ConnectionError(APIError):
     """
     Exception thrown when an error occur
     on client side ( most likely receivable error )
     """
     pass
+
 
 class ServiceError(APIError):
     """
@@ -42,7 +47,7 @@ class T411API:
         if 'token' not in response.keys():
             raise ConnectionError('Unexpected T411 error : %s (%d)'
                                   % (response['error'], response['code']))
-        self.token= response['token']
+        self.token = response['token']
 
     def _raw_query(self, path, params):
         if not self.token:
@@ -82,7 +87,7 @@ class T411API:
         """
         return self._query('/torrents/details/%d' % torrent_id)
 
-    def download(self, torrent_id: int, filename: str ='', base: str =''):
+    def download(self, torrent_id: int, filename: str = '', base: str = ''):
         """
         Download torrent on filesystem
         :param torrent_id:
@@ -92,7 +97,7 @@ class T411API:
         """
         if not filename:
             details = self.details(torrent_id)
-            filename = details['name']
+            filename = helpers.sanitize(details['name'])
         if not base:
             base = os.getcwd()
         if not filename.endswith('.torrent'):
