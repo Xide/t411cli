@@ -37,16 +37,18 @@ At first run, the soft will ask for your T411 credentials, simply type them once
 
 > **search**
 > Command used to browse available torrents.
+
 > **details**
-> Get details for a specific torrent
+> Get details for a specific torrent.
+
 > **download**
-> Download selected torrent to filesystem
+> Download selected torrent to filesystem.
 
 
 
 #### Search for a torrent
 
-You can browse T411 by by simply typing :
+You can browse T411 by by simply typing:
 ```sh
 t411 search 'torrent name'
 ```
