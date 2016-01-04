@@ -102,9 +102,9 @@ class T411API:
             base = os.getcwd()
         if not filename.endswith('.torrent'):
             filename += '.torrent'
-        with open(os.path.join(base, filename), 'w') as out:
+        with open(os.path.join(base, filename), 'wb') as out:
             raw = self._raw_query('/torrents/download/%d' % torrent_id, {})
-            out.write(raw.text)
+            out.write(raw.content)
         return os.path.join(base, filename)
 
     def search(self, query: str, **kwargs):
