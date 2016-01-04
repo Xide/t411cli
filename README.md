@@ -1,6 +1,9 @@
 T411 CLI
 ===================
 
+[![PyPi](https://img.shields.io/pypi/v/t411cli.svg)](https://pypi.python.org/pypi/t411cli)
+
+
 **t411cli** is a lightweight command line interface / API for T411 written in Python.
 
 
@@ -9,6 +12,19 @@ T411 CLI
 Installation
 -------------
 
+### Via pip
+
+```sh
+pip install t411cli
+```
+
+### Using the basic way
+
+```sh
+git clone git@github.com:Xide/t411cli.git
+cd t411cli/
+pip install -r requirements.txt
+```
 
 
 ----------
@@ -103,4 +119,5 @@ Or you can try to improve one of theses :
 	- Command line utilities
 	- Windows compatibility
 	- Fancy colors and stuff
+
 
