@@ -45,6 +45,7 @@ def details(api, conf, args):
     for item in resp['terms'].keys():
         print('%-20s:' % item, resp['terms'][item])
 
+
 def download(api, conf, args):
     """
     Download a torrent
@@ -58,5 +59,5 @@ def download(api, conf, args):
                          base=conf['config']['torrent_folder'])
     print('Torrent %s saved.' % fname)
     if args.cmd:
-        print('Executing command "', args.cmd, '" with $torrent=', fname)
-        system('torrent=%s; %s' % (fname, args.cmd))
+        print('Executing command "', args.cmd, '" with %torrent=', fname)
+        system('torrent=%s; %s' % (fname, args.cmd.replace('%torrent', '$torrent')))
