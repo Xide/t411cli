@@ -11,7 +11,7 @@ def search(api, conf, args):
     """
 
     # TODO : Limitation on API
-    #  limit is put on a big number at the moment as
+    # limit is put on a big number at the moment as
     # we don't know how to sort results via the API
     # so we basiclly just get everything and sort afterward
     # this can cause BIG SLOWDOWN on tiny requests like 'a'

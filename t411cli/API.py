@@ -1,7 +1,8 @@
-import requests
 import os
 
-import helpers
+import requests
+
+from t411cli import helpers
 
 API_URL = 'http://api.t411.in'
 

@@ -4,11 +4,11 @@ Command line entry point
 """
 
 import argparse
+from t411cli import functions
+from t411cli.API import ConnectionError, ServiceError, APIError
+from t411cli.API import T411API
 
-import functions
-from API import ConnectionError, ServiceError, APIError
-from API import T411API
-from configuration import from_env
+from t411cli.configuration import from_env
 
 
 def get_args_parser():
@@ -48,7 +48,7 @@ def check_arguments(args):
     pass
 
 
-def main():
+def t411cli():
     parser = get_args_parser()
     args = parser.parse_args()
     ftab = {
@@ -85,8 +85,15 @@ def main():
             print('[Error] API failed :', e)
 
 
+def main():
+    try:
+        t411cli()
+    except KeyboardInterrupt:
+        print('\nOkay, fine, see ya')
+
+
 if __name__ == '__main__':
     try:
-        main()
+        t411cli()
     except KeyboardInterrupt:
         print('\nOkay, fine, see ya')
