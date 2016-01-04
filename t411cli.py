@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Command line entry point
+"""
+
 
 from configuration import Configuration, from_env, CONF
 from API import T411API
@@ -8,6 +12,10 @@ import argparse
 
 
 def get_args_parser():
+    """
+    Get command line argument parser, crafted with argparse module
+    :return: parser object
+    """
     parser = argparse.ArgumentParser(prog='t411')
     # group = parser.add_mutually_exclusive_group(required=True)
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
@@ -33,6 +41,11 @@ def get_args_parser():
 
 
 def check_arguments(args):
+    """
+    TODO: Check for argument validity ?
+    :param args:
+    :return:
+    """
     pass
 
 
@@ -45,6 +58,7 @@ def main():
         'download': functions.download,
         'details': functions.details
     }
+
     # CLI argument override configuration file
     CONF = from_env(args.username, args.password)
     if args.username:
@@ -67,6 +81,7 @@ def main():
         print('[Error] Service error :', e)
     else:
         try:
+            # Command execution (search/download/...)
             ftab[args.command](api, CONF, args)
         except APIError as e:
             print('[Error] API failed :', e)
