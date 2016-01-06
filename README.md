@@ -15,7 +15,7 @@ Installation
 ### Via pip
 
 ```sh
-pip install t411cli
+pip3 install t411cli
 ```
 
 ### The basic way
