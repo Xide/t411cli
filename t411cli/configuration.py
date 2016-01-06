@@ -86,11 +86,13 @@ def conf_generator(username, password):
     return conf
 
 
-def from_env(username=None, password=None):
+def from_env(username=None, password=None, generate=True):
     """
     Try to load configuration from environment
     :param username:
     :param password:
+    :param generate: if no config is found, ask the user to
+    create a new one
     :return:
     """
     global CONF
@@ -101,9 +103,11 @@ def from_env(username=None, password=None):
         conf = Configuration.load('/etc/t411cli.conf' % home)
     else:
         print('Configuration not found')
-        conf = conf_generator(username, password)
-        with open('%s/.config/t411cli.conf' % home, 'w') as fp:
-            conf.write(fp)
-
+        if generate:
+            conf = conf_generator(username, password)
+            with open('%s/.config/t411cli.conf' % home, 'w') as fp:
+                conf.write(fp)
+        else:
+            conf = None
     CONF = conf
     return conf

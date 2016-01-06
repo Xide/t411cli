@@ -8,6 +8,7 @@ import os
 import requests
 
 from t411cli import helpers
+from simplejson.scanner import JSONDecodeError
 
 API_URL = 'http://api.t411.in'
 
@@ -56,7 +57,11 @@ class T411API:
         if r.status_code != 200:
             raise ServiceError('Unexpected HTTP code %d upon connection'
                                % r.status_code)
-        response = r.json()
+        try:
+            response = r.json()
+        except JSONDecodeError:
+            raise ServiceError('Unexpected non-JSON API response : %s' % r.content)
+
         if 'token' not in response.keys():
             raise ConnectionError('Unexpected T411 error : %s (%d)'
                                   % (response['error'], response['code']))
@@ -92,6 +97,8 @@ class T411API:
         :return:
         """
         r = self._raw_query(path, params)
+        print(r)
+        print(r.content)
         response = r.json()
         if isinstance(response, int):
             return response
