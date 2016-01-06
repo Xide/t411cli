@@ -13,7 +13,7 @@ try:
     import pypandoc
 
     long_description = pypandoc.convert('README.md', 'rst')
-except:
+except (OSError, ImportError):
     pass
 
 

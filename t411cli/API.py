@@ -88,6 +88,22 @@ class T411API:
         """
         return self._query('/torrents/details/%d' % torrent_id)
 
+    def top(self, tp: str):
+        """
+        return T411 top torrents
+        :param tp: one of '100', 'day', 'week', 'month'
+        :return:
+        """
+        ctab = {
+            '100': '/torrents/top/100',
+            'day': '/torrents/top/today',
+            'week': '/torrents/top/week',
+            'month': '/torrents/top/month'
+        }
+        if tp not in ctab.keys():
+            raise ValueError('TOP parameter is not in "100", "day", "week", "month"')
+        return self._query(ctab[tp])
+
     def download(self, torrent_id: int, filename: str = '', base: str = ''):
         """
         Download torrent on filesystem

@@ -4,9 +4,9 @@ Command line entry point
 """
 
 import argparse
-from t411cli import functions
 from t411cli.API import ConnectionError, ServiceError, APIError
 from t411cli.API import T411API
+from t411cli import functions
 
 from t411cli.configuration import from_env
 
@@ -20,15 +20,26 @@ def get_args_parser():
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
 
     search = subparsers.add_parser('search', help='search for a torrent')
+    user = subparsers.add_parser('user', help='search for a torrent')
     details = subparsers.add_parser('details', help='Get details for a specific torrent')
     download = subparsers.add_parser('download', help='Download a torrent file')
+    top = subparsers.add_parser('top', help='Retreive T411 current top torrents list')
 
     parser.add_argument('-c', '--configuration', help='Custom configuration file path')
     parser.add_argument('-l', '--limit', type=int, help='Maximum number of fetched torrent at once')
     parser.add_argument('-u', '--username', type=str, help='T411 username ( override configuration )')
     parser.add_argument('-p', '--password', type=str, help='T411 password ( override configuration )')
 
+    top.add_argument('top', choices=['100', 'day', 'week', 'month'],
+                     help='Witch top to display')
+    top.add_argument('sort', type=str, choices=['seed', 'leech', 'size', 'download'],
+                     default='seed', help='Result sorting parameter', nargs='?')
+    top.add_argument('order', type=str, choices=['asc', 'desc'], default='desc', nargs='?')
+
     search.add_argument('query', type=str, help='String to search for')
+    search.add_argument('sort', type=str, choices=['seed', 'leech', 'size', 'download'],
+                        default='seed', help='Result sorting parameter', nargs='?')
+    search.add_argument('order', type=str, choices=['asc', 'desc'], default='desc', nargs='?')
 
     details.add_argument('torrentID', type=int, help='ID of the torrent')
 
@@ -54,7 +65,8 @@ def t411cli():
     ftab = {
         'search': functions.search,
         'download': functions.download,
-        'details': functions.details
+        'details': functions.details,
+        'top': functions.top
     }
 
     # CLI argument override configuration file

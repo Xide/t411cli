@@ -1,4 +1,5 @@
 from os import system
+from t411cli.helpers import sizeof_fmt
 
 
 def search(api, conf, args):
@@ -15,17 +16,48 @@ def search(api, conf, args):
     # we don't know how to sort results via the API
     # so we basiclly just get everything and sort afterward
     # this can cause BIG SLOWDOWN on tiny requests like 'a'
-
     resp = api.search(args.query, limit=500000)
-    sortlst = sorted(resp['torrents'],
-                     key=lambda x: -int(x['seeders']))
 
     print('Search for query \'%s\' : %s results' % (args.query, resp['total']))
-    print('%10s %5s %5s %s' % ('Torrent ID', 'Seed', 'Leech', 'Name'))
-    for idx in range(min(int(conf['config']['limit']), len(sortlst))):
-        item = sortlst[idx]
-        print('%10s %5s %5s %s' % (
-            item['id'], item['seeders'], item['leechers'], item['name']
+    sortlst = sort_torrents(resp, args.sort, args.order)
+    display_list(sortlst, conf['config']['limit'])
+
+
+def sort_torrents(torrents, key, order):
+    """
+    Sort a list of torrents
+    :param torrents: list of torrents returned by t411 API
+    :param key: one of 'seed', 'leech', 'size', 'download'
+    :param order: 'asc' or 'desc'
+    :return: dict with sorted torrents
+    """
+    ctab = {
+        'seed': 'seeders',
+        'leech': 'leechers',
+        'size': 'size',
+        'download': 'times_completed'
+    }
+    order = 1 if order == 'asc' else -1
+    return sorted(torrents, key=lambda x: order * int(x[ctab[key]]))
+
+
+def top(api, conf, args):
+    try:
+        resp = api.top(args.top)
+    except ValueError:
+        print('Top parameter must be one of "100", "day", "week", "month"')
+    else:
+        sortlst = sort_torrents(resp, args.sort, args.order)
+        display_list(sortlst, conf['config']['limit'])
+
+
+def display_list(torrents, limit):
+    print('%10s %5s %5s % 10s %s' % ('Torrent ID', 'Seed', 'Leech', 'Size', 'Name'))
+    for idx in range(min(int(limit), len(torrents))):
+        item = torrents[idx]
+        print('%10s %5s %5s %10s %s' % (
+            item['id'], item['seeders'], item['leechers'],
+            sizeof_fmt(int(item['size'])), item['name']
         ))
 
 
