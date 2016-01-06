@@ -4,7 +4,7 @@ Command line entry point
 """
 
 import argparse
-from t411cli.API import ConnectionError, ServiceError, APIError
+from t411cli.API import ConnectError, ServiceError, APIError
 from t411cli.API import T411API
 from t411cli import functions
 
@@ -112,7 +112,7 @@ def t411cli():
 
     try:
         api.connect(conf['account']['username'], conf['account']['password'])
-    except ConnectionError as e:
+    except ConnectError as e:
         print('[Error] Connection error :', e)
     except ServiceError as e:
         print('[Error] Service error :', e)
