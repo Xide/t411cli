@@ -97,8 +97,6 @@ class T411API:
         :return:
         """
         r = self._raw_query(path, params)
-        print(r)
-        print(r.content)
         response = r.json()
         if isinstance(response, int):
             return response
