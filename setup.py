@@ -36,7 +36,7 @@ file_text = read(fpath('t411cli/__init__.py'))
 setup(
         name='t411cli',
         version=grep('__version__'),
-        description='Lightweight command line interface for T411',
+        description='Lightweight command line interface for T411 (french torrent site)',
         long_description=long_description,
         url='https://github.com/Xide/t411cli',
         author='Germain Gau',

@@ -25,7 +25,7 @@ def search(api, conf, args):
     resp = api.search(args.query, limit=500000)
 
     print('Search for query \'%s\' : %s results' % (args.query, resp['total']))
-    sortlst = sort_torrents(resp, args.sort, args.order)
+    sortlst = sort_torrents(resp['torrents'], args.sort, args.order)
     display_list(sortlst, conf['config']['limit'])
 
 
@@ -43,6 +43,8 @@ def sort_torrents(torrents, key, order):
         'size': 'size',
         'download': 'times_completed'
     }
+    assert isinstance(torrents, list),\
+        'sort_torrents is supposed to finc a list of torrents'
     order = 1 if order == 'asc' else -1
     return sorted(torrents, key=lambda x: order * int(x[ctab[key]]))
 
