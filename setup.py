@@ -9,16 +9,6 @@ except ImportError:
 
 long_description = ''
 
-try:
-    # We don't include pypandoc in package list
-    # because it is only used from developer side
-    # when publishing the project on pypi
-    import pypandoc
-
-    long_description = pypandoc.convert('README.md', 'rst')
-except (OSError, ImportError) as e:
-    print('Could not convert README to rst format:', e)
-
 
 def fpath(name):
     return os.path.join(os.path.dirname(__file__), name)
