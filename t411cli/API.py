@@ -66,6 +66,8 @@ class T411API:
     def _query(self, path, params=None):
         r = self._raw_query(path, params)
         response = r.json()
+        if isinstance(response, int):
+            return response
         if 'error' in response:
             raise ServiceError('Unexpected T411 error : %s (%d)'
                                % (response['error'], response['code']))
@@ -132,3 +134,13 @@ class T411API:
         params.update(kwargs)
         response = self._query('/torrents/search/' + query, params)
         return response
+
+    def bookmarks(self):
+        return self._query('/bookmarks')
+
+    def add_bookmark(self, torrent_id: int):
+        return self._query('/bookmarks/save/%d' % torrent_id)
+
+    def del_bookmark(self, *args):
+        query = ','.join([str(i) for i in args])
+        return self._query('/bookmarks/delete/%s' % query)

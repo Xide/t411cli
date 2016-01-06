@@ -20,10 +20,17 @@ def get_args_parser():
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
 
     search = subparsers.add_parser('search', help='search for a torrent')
-    user = subparsers.add_parser('user', help='search for a torrent')
+    bookmarks = subparsers.add_parser('bookmark', help='Use and manage your T411 bookmarks')
+    book_subparsers = bookmarks.add_subparsers(help='sub-command help', dest='books')
+    book_add = book_subparsers.add_parser('add', help='add a bookmark')
+    book_list = book_subparsers.add_parser('list', help='list your bookmarks')
+    book_del = book_subparsers.add_parser('del', help='delete a bookmark')
     details = subparsers.add_parser('details', help='Get details for a specific torrent')
     download = subparsers.add_parser('download', help='Download a torrent file')
     top = subparsers.add_parser('top', help='Retreive T411 current top torrents list')
+
+    book_del.add_argument('torrentID', type=int, help='ID of the torrent')
+    book_add.add_argument('torrentID', type=int, help='ID of the torrent')
 
     parser.add_argument('-c', '--configuration', help='Custom configuration file path')
     parser.add_argument('-l', '--limit', type=int, help='Maximum number of fetched torrent at once')
@@ -42,6 +49,7 @@ def get_args_parser():
     search.add_argument('order', type=str, choices=['asc', 'desc'], default='desc', nargs='?')
 
     details.add_argument('torrentID', type=int, help='ID of the torrent')
+
 
     download.add_argument('torrentID', type=int, help='ID of the torrent')
     download.add_argument('name', type=str, nargs='?', help='Optional torrent filename')
@@ -66,7 +74,8 @@ def t411cli():
         'search': functions.search,
         'download': functions.download,
         'details': functions.details,
-        'top': functions.top
+        'top': functions.top,
+        'bookmark': functions.bookmarks
     }
 
     # CLI argument override configuration file

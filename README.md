@@ -18,21 +18,22 @@ Installation
 pip install t411cli
 ```
 
-### Using the basic way
+### The basic way
 
 ```sh
 git clone git@github.com:Xide/t411cli.git
 cd t411cli/
 pip install -r requirements.txt
+python3 ./setup.py install
 ```
-
+Use this method if you want the lastest (maybe less stable) updates.
 
 ----------
 Quick Start
 -------------
 
 At first run, the soft will ask for your T411 credentials, simply type them once and they will be stored under ``` /home/$USER/.config/t411cli.conf ``` (See [Configuration](#Configuration) section for more details.)
-
+> Note: You can override configuration path with **-c** | **--configuration** command line option
 
 **t411cli** main commands:
 
@@ -47,6 +48,9 @@ At first run, the soft will ask for your T411 credentials, simply type them once
 
 > **top**
 > Retreive top torrents
+
+> **bookmark**
+> Bookmarks management
 
 If you want more details about a command usage, you can use the following help pages:
 ```sh
@@ -104,6 +108,13 @@ Will open the corresponding torrent in qbittorrent.
 
 By default, your torrent file will be stored under ```/home/$USER/Downloads``` directory, see [Configuration](#Configuration) section to change this behaviour.
 
+
+#### Manage bookmarks
+
+You can use your t411 bookmarks directly from the command line using the  ```t411 bookmark``` command.
+
+this command will yield a list of all your bookmarked torrents, you can add or delete existing bookmarks with the ```t411 bookmark add TORRENT_ID``` and ```t411 bookmark del TORRENT_ID``` subcommands.
+
 ----------
 Configuration
 -------------
@@ -116,6 +127,7 @@ The tool configuration is split in two parts:
 
 **Account**
 > Section containing account information : username and password
+> Warning: T411 credentials will be stored on your file system unencrypted, you might want to use **-p** command line argument instead if you are using this soft on a public computer.
 
 **Config**
 > Section for software configuration

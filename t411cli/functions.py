@@ -41,6 +41,17 @@ def sort_torrents(torrents, key, order):
     return sorted(torrents, key=lambda x: order * int(x[ctab[key]]))
 
 
+def bookmarks(api, conf, args):
+    if not args.books or 'list' in args.books:
+        display_list(api.bookmarks(), conf['config']['limit'])
+        return
+    elif 'add' in args.books:
+        api.add_bookmark(args.torrentID)
+    else:
+        api.del_bookmark(args.torrentID)
+    print('Done')
+
+
 def top(api, conf, args):
     try:
         resp = api.top(args.top)
@@ -52,13 +63,16 @@ def top(api, conf, args):
 
 
 def display_list(torrents, limit):
-    print('%10s %5s %5s % 10s %s' % ('Torrent ID', 'Seed', 'Leech', 'Size', 'Name'))
-    for idx in range(min(int(limit), len(torrents))):
-        item = torrents[idx]
-        print('%10s %5s %5s %10s %s' % (
-            item['id'], item['seeders'], item['leechers'],
-            sizeof_fmt(int(item['size'])), item['name']
-        ))
+    if not len(torrents):
+        print('Nothing to display.')
+    else:
+        print('%10s %5s %5s % 10s %s' % ('Torrent ID', 'Seed', 'Leech', 'Size', 'Name'))
+        for idx in range(min(int(limit), len(torrents))):
+            item = torrents[idx]
+            print('%10s %5s %5s %10s %s' % (
+                item['id'], item['seeders'], item['leechers'],
+                sizeof_fmt(int(item['size'])), item['name']
+            ))
 
 
 def details(api, conf, args):
