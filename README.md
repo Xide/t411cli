@@ -32,7 +32,7 @@ Use this method if you want the lastest (maybe less stable) updates.
 Quick Start
 -------------
 
-At first run, the soft will ask for your T411 credentials, simply type them once and they will be stored under ``` /home/$USER/.config/t411cli.conf ``` (See [Configuration](#Configuration) section for more details.)
+At first run, the soft will ask for your T411 credentials, simply type them once and they will be stored under ``` /home/$USER/.config/t411cli.conf ``` (See [Configuration](#configuration) section for more details.)
 > Note: You can override configuration path with **-c** | **--configuration** command line option
 
 **t411cli** main commands:
@@ -127,6 +127,7 @@ The tool configuration is split in two parts:
 
 **Account**
 > Section containing account information : username and password
+
 > Warning: T411 credentials will be stored on your file system unencrypted, you might want to use **-p** command line argument instead if you are using this soft on a public computer.
 
 **Config**
