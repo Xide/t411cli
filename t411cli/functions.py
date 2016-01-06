@@ -56,7 +56,7 @@ def top(api, conf, args):
     try:
         resp = api.top(args.top)
     except ValueError:
-        print('Top parameter must be one of "100", "day", "week", "month"')
+        print('Incorrect top parameter')
     else:
         sortlst = sort_torrents(resp, args.sort, args.order)
         display_list(sortlst, conf['config']['limit'])
@@ -66,7 +66,8 @@ def display_list(torrents, limit):
     if not len(torrents):
         print('Nothing to display.')
     else:
-        print('%10s %5s %5s % 10s %s' % ('Torrent ID', 'Seed', 'Leech', 'Size', 'Name'))
+        print('%10s %5s %5s % 10s %s' %
+              ('Torrent ID', 'Seed', 'Leech', 'Size', 'Name'))
         for idx in range(min(int(limit), len(torrents))):
             item = torrents[idx]
             print('%10s %5s %5s %10s %s' % (
@@ -106,4 +107,5 @@ def download(api, conf, args):
     print('Torrent %s saved.' % fname)
     if args.cmd:
         print('Executing command "', args.cmd, '" with %torrent=', fname)
-        system('torrent=%s; %s' % (fname, args.cmd.replace('%torrent', '$torrent')))
+        system('torrent=%s; %s' %
+               (fname, args.cmd.replace('%torrent', '$torrent')))

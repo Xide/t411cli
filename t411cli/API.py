@@ -57,7 +57,9 @@ class T411API:
         if not params:
             params = {}
 
-        r = requests.get(API_URL + path, params, headers={'Authorization': self.token})
+        r = requests.get(API_URL + path, params,
+                         headers={'Authorization': self.token})
+
         if r.status_code != 200:
             raise ServiceError('Unexpected HTTP code %d upon connection'
                                % r.status_code)
@@ -103,7 +105,7 @@ class T411API:
             'month': '/torrents/top/month'
         }
         if tp not in ctab.keys():
-            raise ValueError('TOP parameter is not in "100", "day", "week", "month"')
+            raise ValueError('Incorrect top command parameter')
         return self._query(ctab[tp])
 
     def download(self, torrent_id: int, filename: str = '', base: str = ''):

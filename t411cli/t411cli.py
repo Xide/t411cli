@@ -20,41 +20,59 @@ def get_args_parser():
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
 
     search = subparsers.add_parser('search', help='search for a torrent')
-    bookmarks = subparsers.add_parser('bookmark', help='Use and manage your T411 bookmarks')
-    book_subparsers = bookmarks.add_subparsers(help='sub-command help', dest='books')
+    bookmarks = subparsers.add_parser(
+            'bookmark', help='Use and manage your T411 bookmarks')
+    book_subparsers = bookmarks.add_subparsers(
+            help='sub-command help', dest='books')
     book_add = book_subparsers.add_parser('add', help='add a bookmark')
-    book_list = book_subparsers.add_parser('list', help='list your bookmarks')
-    book_del = book_subparsers.add_parser('del', help='delete a bookmark')
-    details = subparsers.add_parser('details', help='Get details for a specific torrent')
-    download = subparsers.add_parser('download', help='Download a torrent file')
-    top = subparsers.add_parser('top', help='Retreive T411 current top torrents list')
+    book_list = book_subparsers.add_parser(
+            'list', help='list your bookmarks')
+    book_del = book_subparsers.add_parser(
+            'del', help='delete a bookmark')
+    details = subparsers.add_parser(
+            'details', help='Get details for a specific torrent')
+    download = subparsers.add_parser(
+            'download', help='Download a torrent file')
+    top = subparsers.add_parser(
+            'top', help='Retreive T411 current top torrents list')
 
     book_del.add_argument('torrentID', type=int, help='ID of the torrent')
     book_add.add_argument('torrentID', type=int, help='ID of the torrent')
 
-    parser.add_argument('-c', '--configuration', help='Custom configuration file path')
-    parser.add_argument('-l', '--limit', type=int, help='Maximum number of fetched torrent at once')
-    parser.add_argument('-u', '--username', type=str, help='T411 username ( override configuration )')
-    parser.add_argument('-p', '--password', type=str, help='T411 password ( override configuration )')
+    parser.add_argument('-c', '--configuration',
+                        help='Custom configuration file path')
+    parser.add_argument('-l', '--limit', type=int,
+                        help='Maximum number of fetched torrent at once')
+    parser.add_argument('-u', '--username', type=str,
+                        help='T411 username ( override configuration )')
+    parser.add_argument('-p', '--password', type=str,
+                        help='T411 password ( override configuration )')
 
     top.add_argument('top', choices=['100', 'day', 'week', 'month'],
                      help='Witch top to display')
-    top.add_argument('sort', type=str, choices=['seed', 'leech', 'size', 'download'],
-                     default='seed', help='Result sorting parameter', nargs='?')
-    top.add_argument('order', type=str, choices=['asc', 'desc'], default='desc', nargs='?')
+    top.add_argument('sort', type=str,
+                     choices=['seed', 'leech', 'size', 'download'],
+                     default='seed', help='Result sorting parameter',
+                     nargs='?')
+    top.add_argument('order', type=str,
+                     choices=['asc', 'desc'], default='desc', nargs='?')
 
     search.add_argument('query', type=str, help='String to search for')
-    search.add_argument('sort', type=str, choices=['seed', 'leech', 'size', 'download'],
-                        default='seed', help='Result sorting parameter', nargs='?')
-    search.add_argument('order', type=str, choices=['asc', 'desc'], default='desc', nargs='?')
+    search.add_argument('sort', type=str,
+                        choices=['seed', 'leech', 'size', 'download'],
+                        default='seed', help='Result sorting parameter',
+                        nargs='?')
+    search.add_argument('order', type=str, choices=['asc', 'desc'],
+                        default='desc', nargs='?')
 
     details.add_argument('torrentID', type=int, help='ID of the torrent')
 
-
     download.add_argument('torrentID', type=int, help='ID of the torrent')
-    download.add_argument('name', type=str, nargs='?', help='Optional torrent filename')
-    download.add_argument('--cmd', type=str, help='Command to invoke upon torrent completion '
-                                                  '(torrent file is available with %torrent variable)')
+    download.add_argument('name', type=str, nargs='?',
+                          help='Optional torrent filename')
+    download.add_argument('--cmd', type=str,
+                          help='Command to invoke upon torrent completion '
+                               '(torrent file variable : %torrent)')
     return parser
 
 

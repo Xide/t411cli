@@ -30,7 +30,9 @@ class Configuration:
     def check_arguments():
         global CONF
         try:
-            assert 'account' in CONF, 'Invalid configuration file : account informations section is missing'
+            assert 'account' in CONF,\
+                'Invalid configuration file :\
+                 account information section is missing'
 
             for entry in ['password', 'username']:
                 assert entry in CONF['account'].keys(), \
@@ -73,8 +75,10 @@ def conf_generator(username, password):
         pass
 
     conf = Configuration.generate_default()
-    conf['account']['username'] = input('T411 Username: ') if not username else username
-    conf['account']['password'] = getpass('T411 Password: ') if not password else password
+    conf['account']['username'] = input('T411 Username: ')\
+        if not username else username
+    conf['account']['password'] = getpass('T411 Password: ')\
+        if not password else password
     return conf
 
 
