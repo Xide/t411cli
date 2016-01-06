@@ -1,6 +1,6 @@
 """
 T411 API wrapper
-May throw APIError -> (ConnectionError, ServiceError)
+May throw APIError -> (ConnectError, ServiceError)
 """
 
 import os
@@ -21,7 +21,7 @@ class APIError(Exception):
     pass
 
 
-class ConnectionError(APIError):
+class ConnectError(APIError):
     """
     Exception thrown when an error occur
     on client side ( most likely receivable error )
@@ -44,16 +44,20 @@ class T411API:
     def connect(self, username: str, password: str):
         """
         Connect to the T411 service
-        May raise a ServiceError or a ConnectionError
+        May raise a ServiceError or a ConnectError
         :param username: T411 username
         :param password: user password (in plain text)
         :return: Nothing
         """
-        r = requests.post(API_URL + '/auth', data={
-            'username': username,
-            'password': password,
-        })
-
+        try:
+            r = requests.post(API_URL + '/auth', data={
+                'username': username,
+                'password': password,
+            })
+        except Exception as e:
+            # Broad clause, might change in the future, but not yet
+            # useful
+            raise ConnectError('Could not connect to API server: %s' % e)
         if r.status_code != 200:
             raise ServiceError('Unexpected HTTP code %d upon connection'
                                % r.status_code)
@@ -63,7 +67,7 @@ class T411API:
             raise ServiceError('Unexpected non-JSON API response : %s' % r.content)
 
         if 'token' not in response.keys():
-            raise ConnectionError('Unexpected T411 error : %s (%d)'
+            raise ConnectError('Unexpected T411 error : %s (%d)'
                                   % (response['error'], response['code']))
         self.token = response['token']
 
@@ -76,7 +80,7 @@ class T411API:
         :return: Response object
         """
         if not self.token:
-            raise ConnectionError('You must be logged in to use T411 API')
+            raise ConnectError('You must be logged in to use T411 API')
 
         if not params:
             params = {}
@@ -97,7 +101,12 @@ class T411API:
         :return:
         """
         r = self._raw_query(path, params)
-        response = r.json()
+        try:
+            response = r.json()
+        except JSONDecodeError as e:
+            raise ServiceError('Unexpected non-JSON response from T411: %s'
+                               % r.content if r else 'response is None')
+
         if isinstance(response, int):
             return response
         if 'error' in response:
