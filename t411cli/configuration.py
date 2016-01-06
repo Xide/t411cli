@@ -83,6 +83,8 @@ def conf_generator(username, password):
         if not username else username
     conf['account']['password'] = getpass('T411 Password: ')\
         if not password else password
+    conf['config']['torrent_folder'] = \
+        os.path.expanduser(input('Folder to download torrents in: '))
     return conf
 
 
