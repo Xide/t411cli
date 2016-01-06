@@ -1,3 +1,8 @@
+"""
+Simple functions widely used in the program
+"""
+
+
 def sanitize(value):
     """
     Normalizes string, converts to lowercase, removes non-alpha characters,
@@ -13,6 +18,12 @@ def sanitize(value):
 
 
 def sizeof_fmt(num, suffix='B'):
+    """
+    Format file size into a string
+    :param num: file size
+    :param suffix:
+    :return: string containing the formatted number
+    """
     for unit in ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi']:
         if abs(num) < 1024.0:
             return "%3.1f%s%s" % (num, unit, suffix)

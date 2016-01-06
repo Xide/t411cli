@@ -1,3 +1,7 @@
+"""
+Configuration file parser
+"""
+
 import configparser
 import os
 from getpass import getpass

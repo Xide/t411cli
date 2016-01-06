@@ -1,3 +1,9 @@
+"""
+Wrappers to command line options
+normalized functions receiving api,
+file configuration and command line arguments
+"""
+
 from os import system
 from t411cli.helpers import sizeof_fmt
 

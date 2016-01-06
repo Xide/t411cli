@@ -1,3 +1,8 @@
+"""
+T411 API wrapper
+May throw APIError -> (ConnectionError, ServiceError)
+"""
+
 import os
 
 import requests
@@ -36,6 +41,13 @@ class T411API:
         self.uid = None
 
     def connect(self, username: str, password: str):
+        """
+        Connect to the T411 service
+        May raise a ServiceError or a ConnectionError
+        :param username: T411 username
+        :param password: user password (in plain text)
+        :return: Nothing
+        """
         r = requests.post(API_URL + '/auth', data={
             'username': username,
             'password': password,
@@ -51,6 +63,13 @@ class T411API:
         self.token = response['token']
 
     def _raw_query(self, path, params):
+        """
+        Wraps API communication, with token and
+         HTTP error code handling
+        :param path: url to query
+        :param params: http request parameters
+        :return: Response object
+        """
         if not self.token:
             raise ConnectionError('You must be logged in to use T411 API')
 
@@ -66,6 +85,12 @@ class T411API:
         return r
 
     def _query(self, path, params=None):
+        """
+        Handle API response and errors
+        :param path:
+        :param params:
+        :return:
+        """
         r = self._raw_query(path, params)
         response = r.json()
         if isinstance(response, int):
@@ -129,6 +154,12 @@ class T411API:
         return os.path.join(base, filename)
 
     def search(self, query: str, **kwargs):
+        """
+        Search for a torrent, results are unordered
+        :param query:
+        :param kwargs:
+        :return:
+        """
         params = {
             'offset': 0,
         }
@@ -138,11 +169,25 @@ class T411API:
         return response
 
     def bookmarks(self):
+        """
+        retrieve list of user bookmarks
+        :return:
+        """
         return self._query('/bookmarks')
 
     def add_bookmark(self, torrent_id: int):
+        """
+        Add a new bookmark
+        :param torrent_id:
+        :return: number of torrents added
+        """
         return self._query('/bookmarks/save/%d' % torrent_id)
 
     def del_bookmark(self, *args):
+        """
+        Remove a bookmark
+        :param args: tuple of torrent id's
+        :return: Number of torrents deleted
+        """
         query = ','.join([str(i) for i in args])
         return self._query('/bookmarks/delete/%s' % query)
