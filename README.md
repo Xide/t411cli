@@ -6,7 +6,7 @@ T411 CLI
 
 **t411cli** is a lightweight command line interface / API for T411 written in Python.
 
-[[https://github.com/Xide/t411cli/blob/master/screenshot.png]]
+[![Interface](https://github.com/Xide/t411cli/blob/master/screenshot.png)]
 
 
 ----------
