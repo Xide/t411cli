@@ -33,7 +33,8 @@ Quick Start
 
 At first run, the soft will ask for your T411 credentials, simply type them once and they will be stored under ``` /home/$USER/.config/t411cli.conf ``` (See [Configuration](#Configuration) section for more details.)
 
-**t411cli** is composed of three main commands:
+
+**t411cli** main commands:
 
 > **search**
 > Command used to browse available torrents.
@@ -44,7 +45,13 @@ At first run, the soft will ask for your T411 credentials, simply type them once
 > **download**
 > Download selected torrent to filesystem.
 
+> **top**
+> Retreive top torrents
 
+If you want more details about a command usage, you can use the following help pages:
+```sh
+t411 command -h
+```
 
 #### Search for a torrent
 
@@ -58,8 +65,25 @@ The 10 best matches (ordered by number of seeders) will be shown, if you want to
 t411 -l 50      search 'torrent name' # OR
 t411 --limit 50 search 'torrent name' # Both command will give the same results
 ```
+Or you can just browse in the most popular torrents:
+```sh
+t411 top [100|day|week|month]
+```
+##### Sort torrents
+The search and top features handle sorting options:
+```sh
+t411 search "query" seed desc # Sort result by number of seeders (default behaviour)
+t411 top day size asc # Less heavy torrents of the day
+```
+search options are:
+> size
+> seed
+> leech
+> download
 
-This command will yield a list of torrents, To use the other commands, please be sure to note the torrent ID displayed by **search**.
+You can order sorting  with **asc** or **desc** specifier.
+
+Those  commands will yield a list of torrents, To use the other commands, please be sure to **note the torrent ID** displayed.
 
 #### Download a torrent
 
