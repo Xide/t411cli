@@ -1,3 +1,3 @@
-__version__ = '0.1'
+__version__ = '0.2'
 __package__ = 't411cli'
 VERSION = __version__
