@@ -165,6 +165,5 @@ Or you can try to improve one of theses :
 	- Test coverage
 	- Command line utilities
 	- Windows compatibility
-	- Fancy colors and stuff
 
 

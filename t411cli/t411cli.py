@@ -70,7 +70,7 @@ def get_args_parser():
 
     details.add_argument('torrentID', type=int, help='ID of the torrent')
 
-    download.add_argument('torrentID', type=int, help='ID of the torrent')
+    download.add_argument('torrentsID', nargs='+', help='ID of the torrents')
     download.add_argument('name', type=str, nargs='?',
                           help='Optional torrent filename')
     download.add_argument('--cmd', type=str,

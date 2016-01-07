@@ -45,7 +45,7 @@ def sort_torrents(torrents, key, order):
         'size': 'size',
         'download': 'times_completed'
     }
-    assert isinstance(torrents, list),\
+    assert isinstance(torrents, list), \
         'sort_torrents is supposed to finc a list of torrents'
     order = 1 if order == 'asc' else -1
     return sorted(torrents, key=lambda x: order * int(x[ctab[key]]))
@@ -115,10 +115,12 @@ def download(api, conf, args):
     :return:
     """
 
-    fname = api.download(args.torrentID,
-                         base=conf['config']['torrent_folder'])
-    print(Fore.GREEN, 'Torrent %s saved.' % fname)
-    if args.cmd:
-        print('Executing command "', args.cmd, '" with %torrent=', fname)
-        system('torrent=%s; %s' %
-               (fname, args.cmd.replace('%torrent', '$torrent')))
+    fname = None
+    for torrent in args.torrentsID:
+        fname = api.download(int(torrent),
+                             base=conf['config']['torrent_folder'])
+        print('%sTorrent %s saved.' % (Fore.GREEN, fname))
+        if args.cmd:
+            print('Executing ', args.cmd.replace('%torrent', fname))
+            system('torrent=%s; %s' %
+                   (fname, args.cmd.replace('%torrent', '$torrent')))
