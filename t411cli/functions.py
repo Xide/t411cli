@@ -53,9 +53,12 @@ def search(api, conf, args):
     :param args:
     :return:
     """
-    cid = _retrieve_category_id(api, args.category[0])
-    if len(args.category) and not cid:
-        return
+    cid = 0
+    if args.category:
+        cid = _retrieve_category_id(api, args.category[0])
+        if not cid:
+            return
+
     # TODO : Limitation on API
     # limit is put on a big number at the moment as
     # we don't know how to sort results via the API
