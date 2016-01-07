@@ -42,7 +42,8 @@ setup(
         zip_safe=False,
         test_suite='tests',
         install_requires=[
-            'requests'
+            'requests',
+            'colorama'
         ],
         classifiers=[
             'Development Status :: 3 - Alpha',

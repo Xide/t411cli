@@ -6,6 +6,7 @@ import configparser
 import os
 from getpass import getpass
 from os.path import expanduser
+from colorama import Fore
 
 CONF = None
 
@@ -104,7 +105,7 @@ def from_env(username=None, password=None, generate=True):
     elif os.access('/etc/t411cli.conf', os.F_OK | os.R_OK):
         conf = Configuration.load('/etc/t411cli.conf' % home)
     else:
-        print('Configuration not found')
+        print(Fore.YELLOW, 'Configuration not found', Fore.RESET)
         if generate:
             conf = conf_generator(username, password)
             with open('%s/.config/t411cli.conf' % home, 'w') as fp:

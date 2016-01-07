@@ -6,6 +6,7 @@ file configuration and command line arguments
 
 from os import system
 from t411cli.helpers import sizeof_fmt
+from colorama import Fore
 
 
 def search(api, conf, args):
@@ -24,7 +25,8 @@ def search(api, conf, args):
     # this can cause BIG SLOWDOWN on tiny requests like 'a'
     resp = api.search(args.query, limit=500000)
 
-    print('Search for query \'%s\' : %s results' % (args.query, resp['total']))
+    print(Fore.WHITE,
+          'Search for query \'%s\' : %s results' % (args.query, resp['total']))
     sortlst = sort_torrents(resp['torrents'], args.sort, args.order)
     display_list(sortlst, conf['config']['limit'])
 
@@ -57,14 +59,14 @@ def bookmarks(api, conf, args):
         api.add_bookmark(args.torrentID)
     else:
         api.del_bookmark(args.torrentID)
-    print('Done')
+    print(Fore.GREEN, 'Done')
 
 
 def top(api, conf, args):
     try:
         resp = api.top(args.top)
     except ValueError:
-        print('Incorrect top parameter')
+        print(Fore.RED, '[Error] Incorrect top parameter')
     else:
         sortlst = sort_torrents(resp, args.sort, args.order)
         display_list(sortlst, conf['config']['limit'])
@@ -72,15 +74,18 @@ def top(api, conf, args):
 
 def display_list(torrents, limit):
     if not len(torrents):
-        print('Nothing to display.')
+        print(Fore.LIGHTBLUE_EX, 'Nothing to display.')
     else:
-        print('%10s %5s %5s % 10s %s' %
+        print(Fore.LIGHTWHITE_EX, '%10s %5s %5s %10s    %s' %
               ('Torrent ID', 'Seed', 'Leech', 'Size', 'Name'))
         for idx in range(min(int(limit), len(torrents))):
             item = torrents[idx]
-            print('%10s %5s %5s %10s %s' % (
-                item['id'], item['seeders'], item['leechers'],
-                sizeof_fmt(int(item['size'])), item['name']
+            print('%s%10s %s %5s %s %5s %s %10s %s %s' % (
+                Fore.WHITE, item['id'], Fore.GREEN,
+                item['seeders'], Fore.RED,
+                item['leechers'], Fore.MAGENTA,
+                sizeof_fmt(int(item['size'])),
+                Fore.LIGHTBLUE_EX, item['name']
             ))
 
 
@@ -93,12 +98,12 @@ def details(api, conf, args):
     :return:
     """
     resp = api.details(args.torrentID)
-    print('Torrent name        :', resp['name'])
-    print('Torrent ID          :', resp['id'])
-    print('Category            :', resp['categoryname'])
-    print('From                :', resp['username'])
+    print(Fore.LIGHTBLUE_EX, 'Torrent name        :', resp['name'])
+    print(Fore.LIGHTBLUE_EX, 'Torrent ID          :', resp['id'])
+    print(Fore.LIGHTBLUE_EX, 'Category            :', resp['categoryname'])
+    print(Fore.LIGHTBLUE_EX, 'From                :', resp['username'])
     for item in resp['terms'].keys():
-        print('%-20s:' % item, resp['terms'][item])
+        print(Fore.LIGHTBLUE_EX, '%-20s:' % item, resp['terms'][item])
 
 
 def download(api, conf, args):
@@ -112,7 +117,7 @@ def download(api, conf, args):
 
     fname = api.download(args.torrentID,
                          base=conf['config']['torrent_folder'])
-    print('Torrent %s saved.' % fname)
+    print(Fore.GREEN, 'Torrent %s saved.' % fname)
     if args.cmd:
         print('Executing command "', args.cmd, '" with %torrent=', fname)
         system('torrent=%s; %s' %

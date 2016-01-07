@@ -4,6 +4,9 @@ Command line entry point
 """
 
 import argparse
+
+from colorama import init, Fore
+
 from t411cli.API import ConnectError, ServiceError, APIError
 from t411cli.API import T411API
 from t411cli import functions
@@ -113,22 +116,23 @@ def t411cli():
     try:
         api.connect(conf['account']['username'], conf['account']['password'])
     except ConnectError as e:
-        print('[Error] Connection error :', e)
+        print(Fore.RED, '[Error] Connection error :', e)
     except ServiceError as e:
-        print('[Error] Service error :', e)
+        print(Fore.RED, '[Error] Service error :', e)
     else:
         try:
             # Command execution (search/download/...)
             ftab[args.command](api, conf, args)
         except APIError as e:
-            print('[Error] API failed :', e)
+            print(Fore.RED, '[Error] API failed :', e)
 
 
 def main():
     try:
+        init()
         t411cli()
     except KeyboardInterrupt:
-        print('\nOkay, fine, see ya')
+        print(Fore.GREEN, '\nExiting properly.')
 
 
 if __name__ == '__main__':
