@@ -5,8 +5,44 @@ file configuration and command line arguments
 """
 
 from os import system
-from t411cli.helpers import sizeof_fmt
+from t411cli.helpers import sizeof_fmt, sanitize
 from colorama import Fore
+import re
+
+
+def _retrieve_category_id(api, fmt):
+    """
+    Internal function to guess category id from
+    formatted string outputted by _generate_category_lst
+    :param api:
+    :param fmt:
+    :return:
+    """
+    cid = 0
+    if fmt:
+        reg = re.compile('^(.*)%s(.*)$' % fmt)
+        cat = _build_category_tree(api)
+        lst = _build_category_list(cat)
+        possibilities = []
+        for item, cat in lst:
+            res = reg.match(item)
+            if not res:
+                continue
+            possibilities += [(res.group(0), cat)]
+        if not len(possibilities):
+            print(Fore.RED, 'No such category found : %s' % fmt)
+            return 0
+        elif len(possibilities) > 1:
+            print(Fore.YELLOW, 'Category name is ambiguous, can refer to the following:')
+            for item, _ in possibilities:
+                print('\t-', item)
+            return 0
+        else:
+            _, i = possibilities[0]
+            print(Fore.GREEN, 'Searching in subcategory %s' % _)
+            cid = i
+            del i
+    return cid
 
 
 def search(api, conf, args):
@@ -17,14 +53,18 @@ def search(api, conf, args):
     :param args:
     :return:
     """
-
+    cid = _retrieve_category_id(api, args.category[0])
+    if len(args.category) and not cid:
+        return
     # TODO : Limitation on API
     # limit is put on a big number at the moment as
     # we don't know how to sort results via the API
     # so we basiclly just get everything and sort afterward
     # this can cause BIG SLOWDOWN on tiny requests like 'a'
-    resp = api.search(args.query, limit=500000)
-
+    if cid:
+        resp = api.search(args.query, limit=500000, cid=cid)
+    else:
+        resp = api.search(args.query, limit=500000)
     print(Fore.WHITE,
           'Search for query \'%s\' : %s results' % (args.query, resp['total']))
     sortlst = sort_torrents(resp['torrents'], args.sort, args.order)
@@ -124,3 +164,37 @@ def download(api, conf, args):
             print('Executing ', args.cmd.replace('%torrent', fname))
             system('torrent=%s; %s' %
                    (fname, args.cmd.replace('%torrent', '$torrent')))
+
+
+def _build_category_list(tree):
+    lst = []
+    for item in tree:
+        for sitem in tree[item]:
+            lst += [('%s/%s' % (item, sitem), tree[item][sitem][0])]
+    return lst
+
+
+def _build_category_tree(api):
+    res = {}
+    resp = api.categories()
+    for category_id in resp:
+        if 'name' in resp[category_id]:
+            key = sanitize(resp[category_id]['name'])
+        else:
+            key = 'other'
+        if key not in res:
+            res[key] = {}
+        for subcategory_id in resp[category_id]['cats']:
+            skey = sanitize(resp[category_id]['cats'][subcategory_id]['name'])
+            res[key][skey] = (resp[category_id]['cats'][subcategory_id]['id'],
+                              category_id)
+    return res
+
+
+def categories(api, conf, args):
+    resp = _build_category_tree(api)
+
+    for cat in sorted(resp.keys()):
+        print('%s%s%s' % (Fore.MAGENTA, cat, Fore.RESET))
+        for scat in sorted(resp[cat].keys()):
+            print('\t%s%s%s' % (Fore.LIGHTBLUE_EX, scat, Fore.RESET))

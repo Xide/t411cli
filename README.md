@@ -77,6 +77,17 @@ Or you can just browse in the most popular torrents:
 ```sh
 t411 top [100|day|week|month]
 ```
+
+##### Filter results by category
+
+Name of categories can be retreived using ```t411 categories``` command.
+You can then filter results of a query with download **-c** argument like so:
+```sh
+t411 search archlinux -c application/linux
+```
+
+Will fetch only the results for 'archlinux' under linux application category.
+
 ##### Sort torrents
 The search and top features handle sorting options:
 ```sh

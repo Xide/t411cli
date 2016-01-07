@@ -147,6 +147,9 @@ class T411API:
             raise ValueError('Incorrect top command parameter')
         return self._query(ctab[tp])
 
+    def categories(self):
+        return self._query('/categories/tree')
+
     def download(self, torrent_id: int, filename: str = '', base: str = ''):
         """
         Download torrent on filesystem
@@ -174,6 +177,7 @@ class T411API:
         :param kwargs:
         :return:
         """
+
         params = {
             'offset': 0,
         }

@@ -36,6 +36,8 @@ def get_args_parser():
             'details', help='Get details for a specific torrent')
     download = subparsers.add_parser(
             'download', help='Download a torrent file')
+    categories = subparsers.add_parser(
+            'categories', help='Download a torrent file')
     top = subparsers.add_parser(
             'top', help='Retreive T411 current top torrents list')
 
@@ -61,6 +63,8 @@ def get_args_parser():
                      choices=['asc', 'desc'], default='desc', nargs='?')
 
     search.add_argument('query', type=str, help='String to search for')
+    search.add_argument('-c', '--category', type=str, nargs=1,
+                        help='Category to search in ( allow python regexp format )')
     search.add_argument('sort', type=str,
                         choices=['seed', 'leech', 'size', 'download'],
                         default='seed', help='Result sorting parameter',
@@ -96,6 +100,7 @@ def t411cli():
         'download': functions.download,
         'details': functions.details,
         'top': functions.top,
+        'categories': functions.categories,
         'bookmark': functions.bookmarks
     }
 
