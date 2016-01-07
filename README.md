@@ -144,12 +144,15 @@ The tool configuration is split in two parts:
 	> The tool will download torrent files in this folder
 
 ----------
-Troubleshooting
+FAQ
 -------------
 
 Getting a ```ServiceError``` on program startup:
 > This error is usually used when T411 is unreachable or encounter an unknown problem, check for [API status](http://www.websitedown.info/api.t411.in)
 > If this service is up, please contact a project developer
+
+Getting an import error at program starting:
+> Some dependencies may have changed, try to run **pip install -r requirements.txt** to refresh dependency list
 
 ----------
 Developers
