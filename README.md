@@ -93,6 +93,9 @@ You can order sorting  with **asc** or **desc** specifier.
 
 Those  commands will yield a list of torrents, To use the other commands, please be sure to **note the torrent ID** displayed.
 
+> Warning: as T411 API does not provide sorting capabilities, we must fetch the entire list of torrent,  
+> so short search query like 'a' can be **VERY SLOW** ( or timeout, with 524 HTTP code )
+
 #### Download a torrent
 
 In order to download a torrent, you must have his ID;
