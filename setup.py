@@ -29,12 +29,12 @@ file_text = read(fpath('t411cli/__init__.py'))
 setup(
         name='t411cli',
         version=grep('__version__'),
-        description='Lightweight command line interface for T411 (french torrent site)',
+        description='Lightweight command line interface for T411 (french torrent website)',
         long_description=long_description,
         url='https://github.com/Xide/t411cli',
         author='Germain Gau',
         author_email='germain.gau@gmail.com',
-        license='',
+        license='THE BEER-WARE LICENSE',
         packages=['t411cli'],
         entry_points={
             'console_scripts': ['t411=t411cli.t411cli:main'],
