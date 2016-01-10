@@ -7,10 +7,9 @@ import argparse
 
 from colorama import init, Fore
 
+from t411cli import functions
 from t411cli.API import ConnectError, ServiceError, APIError
 from t411cli.API import T411API
-from t411cli import functions
-
 from t411cli.configuration import from_env
 
 
@@ -23,7 +22,6 @@ def get_args_parser():
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
 
     search = subparsers.add_parser('search', help='search for a torrent')
-    user = subparsers.add_parser('user', help='get stats about an user')
     bookmarks = subparsers.add_parser(
             'bookmark', help='Use and manage your T411 bookmarks')
     book_subparsers = bookmarks.add_subparsers(
@@ -41,6 +39,8 @@ def get_args_parser():
             'categories', help='Download a torrent file')
     top = subparsers.add_parser(
             'top', help='Retreive T411 current top torrents list')
+    user = subparsers.add_parser('user', help='get stats about an user')
+
 
     book_del.add_argument('torrentID', type=int, help='ID of the torrent')
     book_add.add_argument('torrentID', type=int, help='ID of the torrent')
@@ -73,8 +73,6 @@ def get_args_parser():
     search.add_argument('order', type=str, choices=['asc', 'desc'],
                         default='desc', nargs='?')
 
-    user.add_argument('uid', type=int, help='user id', nargs='?', default=None)
-
     details.add_argument('torrentID', type=int, help='ID of the torrent')
 
     download.add_argument('torrentsID', nargs='+', help='ID of the torrents')
@@ -83,6 +81,9 @@ def get_args_parser():
     download.add_argument('--cmd', type=str,
                           help='Command to invoke upon torrent completion '
                                '(torrent file variable : %torrent)')
+
+    user.add_argument('uid', type=int, help='user id (optional)', nargs='?', default=None)
+
     return parser
 
 
@@ -100,11 +101,11 @@ def t411cli():
     args = parser.parse_args()
     ftab = {
         'search': functions.search,
-        'user': functions.user,
         'download': functions.download,
         'details': functions.details,
         'top': functions.top,
         'categories': functions.categories,
+        'user': functions.user,
         'bookmark': functions.bookmarks
     }
 

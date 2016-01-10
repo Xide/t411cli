@@ -191,6 +191,19 @@ class T411API:
         response = self._query('/torrents/search/' + query, params)
         return response
 
+    def user(self, uid: int = None):
+        """
+        Get stats about an user
+        :param uid: user id
+        :return:
+        """
+        if not uid:
+            uid = self.uid
+        user = self._query('/users/profile/%d' % uid)
+        if 'uid' not in user:
+            user['uid'] = uid
+        return user
+
     def bookmarks(self):
         """
         retrieve list of user bookmarks
@@ -214,16 +227,3 @@ class T411API:
         """
         query = ','.join([str(i) for i in args])
         return self._query('/bookmarks/delete/%s' % query)
-
-    def user(self, uid: int = None):
-        """
-        Get stats about an user
-        :param uid: user id
-        :return:
-        """
-        if not uid:
-            uid = self.uid
-        user = self._query('/users/profile/%d' % uid)
-        if 'uid' not in user:
-            user['uid'] = uid
-        return user

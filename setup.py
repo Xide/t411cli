@@ -1,36 +1,15 @@
-import codecs
-import os.path
-import re
-
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-long_description = ''
-
-
-def fpath(name):
-    return os.path.join(os.path.dirname(__file__), name)
-
-
-def read(fname):
-    return codecs.open(fpath(fname), encoding='utf-8').read()
-
-
-def grep(attrname):
-    pattern = r"{0}\W*=\W*'([^']+)'".format(attrname)
-    strval, = re.findall(pattern, file_text)
-    return strval
-
-
-file_text = read(fpath('t411cli/__init__.py'))
+from t411cli import __version__
 
 setup(
         name='t411cli',
-        version=grep('__version__'),
+        version=__version__,
         description='Lightweight command line interface for T411 (french torrent website)',
-        long_description=long_description,
+        long_description='Documentation is available `here <https://github.com/Xide/t411cli/blob/master/README.md>`_',
         url='https://github.com/Xide/t411cli',
         author='Germain Gau',
         author_email='germain.gau@gmail.com',

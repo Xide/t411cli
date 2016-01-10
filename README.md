@@ -131,13 +131,6 @@ Will open the corresponding torrent in qbittorrent.
 
 By default, your torrent file will be stored under ```/home/$USER/Downloads``` directory, see [Configuration](#Configuration) section to change this behaviour.
 
-
-#### Manage bookmarks
-
-You can use your t411 bookmarks directly from the command line using the  ```t411 bookmark``` command.
-
-this command will yield a list of all your bookmarked torrents, you can add or delete existing bookmarks with the ```t411 bookmark add TORRENT_ID``` and ```t411 bookmark del TORRENT_ID``` subcommands.
-
 #### Get user infos
 
 User infos are available from the command line using  ```t411 user``` command.
@@ -146,6 +139,13 @@ By default, **your** user infos will be fetched, but you can also specify a user
 ```sh
 t411 user USER_ID
 ```
+
+#### Manage bookmarks
+
+You can use your t411 bookmarks directly from the command line using the  ```t411 bookmark``` command.
+
+this command will yield a list of all your bookmarked torrents, you can add or delete existing bookmarks with the ```t411 bookmark add TORRENT_ID``` and ```t411 bookmark del TORRENT_ID``` subcommands.
+
 
 ----------
 Configuration
