@@ -2,6 +2,7 @@ T411 CLI
 ===================
 
 [![PyPi](https://img.shields.io/pypi/v/t411cli.svg)](https://pypi.python.org/pypi/t411cli)
+[![Travis-CI](https://api.travis-ci.org/Xide/t411cli.svg)](https://travis-ci.org/Xide/t411cli)
 
 
 **t411cli** is a lightweight command line interface / API for T411 written in Python.
