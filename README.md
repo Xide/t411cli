@@ -15,7 +15,7 @@ Installation
 -------------
 
 
-**t411cli** require **[t411api](https://github.com/Xide/t411cli)**, but pip will install it for you.
+**t411cli** require **[t411api](https://github.com/Xide/t411api)**, but pip will install it for you.
 
 ### Via pip
 
