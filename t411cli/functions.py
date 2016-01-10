@@ -169,6 +169,28 @@ def download(api, conf, args):
                    (fname, args.cmd.replace('%torrent', '$torrent')))
 
 
+def user(api, conf, args):
+    """
+    Get stats about an user
+    :param api:
+    :param conf:
+    :param args:
+    :return:
+    """
+
+    user = api.user(args.uid)
+    print(Fore.LIGHTBLUE_EX, 'Username     :', user['username'])
+    print(Fore.LIGHTBLUE_EX, 'User ID      :', user['uid'])
+    print(Fore.LIGHTBLUE_EX, 'Downloaded   :', sizeof_fmt(int(user['downloaded'])))
+    print(Fore.LIGHTBLUE_EX, 'Uploaded     :', sizeof_fmt(int(user['uploaded'])))
+    if not int(user['downloaded']):
+        ratio = 'infinity'
+    else:
+        ratio = '%.2f' % ((int(user['uploaded']) / pow(1024, 3)) /
+                          (int(user['downloaded']) / pow(1024, 3)))
+    print(Fore.LIGHTBLUE_EX, 'Ratio        :', ratio)
+
+
 def _build_category_list(tree):
     lst = []
     for item in tree:

@@ -16,14 +16,16 @@ Installation
 ### Via pip
 
 ```sh
+# stable version
 pip3 install t411cli
+# upstream version 
+pip3 install git+https://git@github.com/Xide/t411cli
 ```
 
 ### The basic way
 
 ```sh
-git clone git@github.com:Xide/t411cli.git
-cd t411cli/
+git clone git@github.com:Xide/t411cli.git && cd t411cli
 pip3 install -r requirements.txt
 python3 ./setup.py install
 ```
@@ -52,6 +54,9 @@ At first run, the soft will ask for your T411 credentials, simply type them once
 
 > **top**
 > Retreive top torrents
+
+> **user**
+> Get infos about a t411 user.
 
 > **bookmark**
 > Bookmarks management
@@ -132,6 +137,15 @@ By default, your torrent file will be stored under ```/home/$USER/Downloads``` d
 You can use your t411 bookmarks directly from the command line using the  ```t411 bookmark``` command.
 
 this command will yield a list of all your bookmarked torrents, you can add or delete existing bookmarks with the ```t411 bookmark add TORRENT_ID``` and ```t411 bookmark del TORRENT_ID``` subcommands.
+
+#### Get user infos
+
+User infos are available from the command line using  ```t411 user``` command.
+
+By default, **your** user infos will be fetched, but you can also specify a user id:
+```sh
+t411 user USER_ID
+```
 
 ----------
 Configuration

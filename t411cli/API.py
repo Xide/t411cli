@@ -72,8 +72,9 @@ class T411API:
 
         if 'token' not in response.keys():
             raise ConnectError('Unexpected T411 error : %s (%d)'
-                                  % (response['error'], response['code']))
+                               % (response['error'], response['code']))
         self.token = response['token']
+        self.uid = int(response['uid'])
 
     def _raw_query(self, path, params):
         """
@@ -213,3 +214,16 @@ class T411API:
         """
         query = ','.join([str(i) for i in args])
         return self._query('/bookmarks/delete/%s' % query)
+
+    def user(self, uid: int = None):
+        """
+        Get stats about an user
+        :param uid: user id
+        :return:
+        """
+        if not uid:
+            uid = self.uid
+        user = self._query('/users/profile/%d' % uid)
+        if 'uid' not in user:
+            user['uid'] = uid
+        return user

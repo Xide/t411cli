@@ -23,6 +23,7 @@ def get_args_parser():
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
 
     search = subparsers.add_parser('search', help='search for a torrent')
+    user = subparsers.add_parser('user', help='get stats about an user')
     bookmarks = subparsers.add_parser(
             'bookmark', help='Use and manage your T411 bookmarks')
     book_subparsers = bookmarks.add_subparsers(
@@ -72,6 +73,8 @@ def get_args_parser():
     search.add_argument('order', type=str, choices=['asc', 'desc'],
                         default='desc', nargs='?')
 
+    user.add_argument('uid', type=int, help='user id', nargs='?', default=None)
+
     details.add_argument('torrentID', type=int, help='ID of the torrent')
 
     download.add_argument('torrentsID', nargs='+', help='ID of the torrents')
@@ -97,6 +100,7 @@ def t411cli():
     args = parser.parse_args()
     ftab = {
         'search': functions.search,
+        'user': functions.user,
         'download': functions.download,
         'details': functions.details,
         'top': functions.top,
@@ -141,7 +145,4 @@ def main():
 
 
 if __name__ == '__main__':
-    try:
-        t411cli()
-    except KeyboardInterrupt:
-        print('\nOkay, fine, see ya')
+    main()
