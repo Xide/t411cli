@@ -30,16 +30,16 @@ def _retrieve_category_id(api, fmt):
                 continue
             possibilities += [(res.group(0), cat)]
         if not len(possibilities):
-            print(Fore.RED, 'No such category found : %s' % fmt)
+            print(Fore.RED, 'No such category found : %s' % fmt, Fore.RESET)
             return 0
         elif len(possibilities) > 1:
-            print(Fore.YELLOW, 'Category name is ambiguous, can refer to the following:')
+            print(Fore.YELLOW, 'Category name is ambiguous, can refer to the following:', Fore.RESET)
             for item, _ in possibilities:
                 print('\t-', item)
             return 0
         else:
             _, i = possibilities[0]
-            print(Fore.GREEN, 'Searching in subcategory %s' % _)
+            print(Fore.GREEN, 'Searching in subcategory %s' % _, Fore.RESET)
             cid = i
             del i
     return cid
@@ -68,8 +68,7 @@ def search(api, conf, args):
         resp = api.search(args.query, limit=500000, cid=cid)
     else:
         resp = api.search(args.query, limit=500000)
-    print(Fore.WHITE,
-          'Search for query \'%s\' : %s results' % (args.query, resp['total']))
+    print('Search for query \'%s\' : %s results' % (args.query, resp['total']))
     sortlst = sort_torrents(resp['torrents'], args.sort, args.order)
     display_list(sortlst, conf['config']['limit'])
 
@@ -102,14 +101,14 @@ def bookmarks(api, conf, args):
         api.add_bookmark(args.torrentID)
     else:
         api.del_bookmark(args.torrentID)
-    print(Fore.GREEN, 'Done')
+    print(Fore.GREEN, 'Done', Fore.RESET)
 
 
 def top(api, conf, args):
     try:
         resp = api.top(args.top)
     except ValueError:
-        print(Fore.RED, '[Error] Incorrect top parameter')
+        print(Fore.RED, '[Error] Incorrect top parameter', Fore.RESET)
     else:
         sortlst = sort_torrents(resp, args.sort, args.order)
         display_list(sortlst, conf['config']['limit'])
@@ -123,12 +122,12 @@ def display_list(torrents, limit):
               ('Torrent ID', 'Seed', 'Leech', 'Size', 'Name'))
         for idx in range(min(int(limit), len(torrents))):
             item = torrents[idx]
-            print('%s%10s %s %5s %s %5s %s %10s %s %s' % (
+            print('%s%10s %s %5s %s %5s %s %10s %s %s%s' % (
                 Fore.WHITE, item['id'], Fore.GREEN,
                 item['seeders'], Fore.RED,
                 item['leechers'], Fore.MAGENTA,
                 sizeof_fmt(int(item['size'])),
-                Fore.LIGHTBLUE_EX, item['name']
+                Fore.LIGHTBLUE_EX, item['name'], Fore.RESET
             ))
 
 
@@ -141,12 +140,14 @@ def details(api, conf, args):
     :return:
     """
     resp = api.details(args.torrentID)
-    print(Fore.LIGHTBLUE_EX, 'Torrent name        :', resp['name'])
-    print(Fore.LIGHTBLUE_EX, 'Torrent ID          :', resp['id'])
-    print(Fore.LIGHTBLUE_EX, 'Category            :', resp['categoryname'])
-    print(Fore.LIGHTBLUE_EX, 'From                :', resp['username'])
+    print(Fore.LIGHTBLUE_EX, end='')
+    print('Torrent name        :', resp['name'])
+    print('Torrent ID          :', resp['id'])
+    print('Category            :', resp['categoryname'])
+    print('From                :', resp['username'])
     for item in resp['terms'].keys():
-        print(Fore.LIGHTBLUE_EX, '%-20s:' % item, resp['terms'][item])
+        print('%-20s:' % item, resp['terms'][item])
+    print(Fore.RESET, end='')
 
 
 def download(api, conf, args):
@@ -158,13 +159,12 @@ def download(api, conf, args):
     :return:
     """
 
-    fname = None
     for torrent in args.torrentsID:
         fname = api.download(int(torrent),
                              base=conf['config']['torrent_folder'])
-        print('%sTorrent %s saved.' % (Fore.GREEN, fname))
+        print('%sTorrent %s saved.%s' % (Fore.GREEN, fname, Fore.RESET))
         if args.cmd:
-            print('Executing ', args.cmd.replace('%torrent', fname))
+            print('%sExecuting %s%s' % (Fore.GREEN, args.cmd.replace('%torrent', fname), Fore.RESET))
             system('torrent=%s; %s' %
                    (fname, args.cmd.replace('%torrent', '$torrent')))
 
@@ -179,16 +179,17 @@ def user(api, conf, args):
     """
 
     user = api.user(args.uid)
-    print(Fore.LIGHTBLUE_EX, 'Username     :', user['username'])
-    print(Fore.LIGHTBLUE_EX, 'User ID      :', user['uid'])
-    print(Fore.LIGHTBLUE_EX, 'Downloaded   :', sizeof_fmt(int(user['downloaded'])))
-    print(Fore.LIGHTBLUE_EX, 'Uploaded     :', sizeof_fmt(int(user['uploaded'])))
+    print(Fore.LIGHTBLUE_EX, end='')
+    print('Username     :', user['username'])
+    print('User ID      :', user['uid'])
+    print('Downloaded   :', sizeof_fmt(int(user['downloaded'])))
+    print('Uploaded     :', sizeof_fmt(int(user['uploaded'])))
     if not int(user['downloaded']):
         ratio = 'infinity'
     else:
-        ratio = '%.2f' % ((int(user['uploaded']) / pow(1024, 3)) /
-                          (int(user['downloaded']) / pow(1024, 3)))
-    print(Fore.LIGHTBLUE_EX, 'Ratio        :', ratio)
+        ratio = '%.2f' % (int(user['uploaded']) / int(user['downloaded']))
+    print('Ratio        :', ratio)
+    print(Fore.RESET, end='')
 
 
 def _build_category_list(tree):

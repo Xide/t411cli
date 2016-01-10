@@ -14,6 +14,9 @@ T411 CLI
 Installation
 -------------
 
+
+**t411cli** require **[t411api](https://github.com/Xide/t411cli)**, but pip will install it for you.
+
 ### Via pip
 
 ```sh
@@ -30,7 +33,7 @@ git clone git@github.com:Xide/t411cli.git && cd t411cli
 pip3 install -r requirements.txt
 python3 ./setup.py install
 ```
-Use this method if you want the lastest (maybe less stable) updates.
+Use this method if you want the latest (maybe less stable) updates.
 
 
 > Note: The code is not yet compatible with python2

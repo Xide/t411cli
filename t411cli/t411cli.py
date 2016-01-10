@@ -8,8 +8,8 @@ import argparse
 from colorama import init, Fore
 
 from t411cli import functions
-from t411cli.API import ConnectError, ServiceError, APIError
-from t411cli.API import T411API
+from t411api.API import ConnectError, ServiceError, APIError
+from t411api.API import T411API
 from t411cli.configuration import from_env
 
 
@@ -40,7 +40,6 @@ def get_args_parser():
     top = subparsers.add_parser(
             'top', help='Retreive T411 current top torrents list')
     user = subparsers.add_parser('user', help='get stats about an user')
-
 
     book_del.add_argument('torrentID', type=int, help='ID of the torrent')
     book_add.add_argument('torrentID', type=int, help='ID of the torrent')

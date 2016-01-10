@@ -1,2 +1,2 @@
-requests>=2.9.1
+t411api>=0.1.0
 colorama

@@ -21,12 +21,11 @@ setup(
         zip_safe=False,
         test_suite='tests',
         install_requires=[
-            'requests>=2.9.1',
+            't411api>=0.1.0',
             'colorama'
         ],
         classifiers=[
-            'Development Status :: 3 - Alpha',
-            'Intended Audience :: Developers',
+            'Development Status :: 4 - Beta',
             'Intended Audience :: End Users/Desktop',
             "Programming Language :: Python :: 3",
             "Programming Language :: Python :: 3.3",
