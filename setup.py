@@ -5,9 +5,6 @@ except ImportError:
 
 from t411cli import __version__
 
-with open('requirements.txt') as f:
-    required = f.read().splitlines()
-
 setup(
         name='t411cli',
         version=__version__,
@@ -23,7 +20,10 @@ setup(
         },
         zip_safe=False,
         test_suite='tests',
-        install_requires=required,
+        install_requires=[
+            't411api>=0.1.1',
+            'colorama'
+        ],
         classifiers=[
             'Development Status :: 4 - Beta',
             'Intended Audience :: End Users/Desktop',
