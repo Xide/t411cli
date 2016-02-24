@@ -3,7 +3,8 @@ try:
 except ImportError:
     from distutils.core import setup
 
-from t411cli import __version__
+__version__ = '1.0.0'
+exec(open('t411cli/version.py').read())
 
 setup(
         name='t411cli',
@@ -21,13 +22,16 @@ setup(
         zip_safe=False,
         test_suite='tests',
         install_requires=[
-            't411api>=0.1.1',
+            't411api>=0.1.4',
             'colorama'
         ],
         classifiers=[
             'Development Status :: 4 - Beta',
             'Intended Audience :: End Users/Desktop',
             "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.2",
+            "Programming Language :: Python :: 3.3",
+            "Programming Language :: Python :: 3.4",
             "Programming Language :: Python :: 3.5",
             'Topic :: Software Development :: Libraries :: Python Modules',
             'Programming Language :: Python',

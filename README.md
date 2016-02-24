@@ -7,7 +7,7 @@ T411 CLI
 
 **t411cli** is a lightweight command line interface / API for T411 written in Python.
 
-![Interface](https://github.com/Xide/t411cli/blob/master/screen.png)
+![Interface](https://github.com/Xide/t411cli/blob/master/screenshot.png)
 
 
 ----------
@@ -17,12 +17,17 @@ Installation
 
 **t411cli** require **[t411api](https://github.com/Xide/t411api)**, but pip will install it for you.
 
+### Compatibility
+
+> This code is developped with Python 3.5
+> It sould however be compatible with Python >= 3.2
+
 ### Via pip
 
 ```sh
 # stable version
 pip3 install t411cli
-# upstream version 
+# upstream versions
 pip3 install git+https://git@github.com/Xide/t411cli
 ```
 
@@ -33,10 +38,9 @@ git clone git@github.com:Xide/t411cli.git && cd t411cli
 pip3 install -r requirements.txt
 python3 ./setup.py install
 ```
+
 Use this method if you want the latest (maybe less stable) updates.
 
-
-> Note: The code is not yet compatible with python2
 
 ----------
 Quick Start
