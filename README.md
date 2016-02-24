@@ -35,7 +35,6 @@ pip3 install git+https://git@github.com/Xide/t411cli
 
 ```sh
 git clone git@github.com:Xide/t411cli.git && cd t411cli
-pip3 install -r requirements.txt
 python3 ./setup.py install
 ```
 
