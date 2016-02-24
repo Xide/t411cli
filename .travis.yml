@@ -6,5 +6,6 @@ python:
   - "3.5"
   - "nightly"
 install:
+  - pip install git+https://github.com/Xide/t411cli.git
   - pip install .
 script: nosetests
