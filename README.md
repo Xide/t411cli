@@ -1,6 +1,8 @@
 T411 CLI
 ===================
 
+[![Join the chat at https://gitter.im/Xide/t411cli](https://badges.gitter.im/Xide/t411cli.svg)](https://gitter.im/Xide/t411cli?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![PyPi](https://img.shields.io/pypi/v/t411cli.svg)](https://pypi.python.org/pypi/t411cli)
 [![Travis-CI](https://api.travis-ci.org/Xide/t411cli.svg)](https://travis-ci.org/Xide/t411cli)
 
