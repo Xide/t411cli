@@ -7,6 +7,7 @@ file configuration and command line arguments
 from os import system
 from t411cli.helpers import sizeof_fmt, sanitize
 from colorama import Fore
+from math import floor
 import re
 
 
@@ -183,12 +184,14 @@ def user(api, conf, args):
     print(Fore.LIGHTBLUE_EX, end='')
     print('Username     :', user['username'])
     print('User ID      :', user['uid'])
-    print('Downloaded   :', sizeof_fmt(int(user['downloaded'])))
     print('Uploaded     :', sizeof_fmt(int(user['uploaded'])))
+    print('Downloaded   :', sizeof_fmt(int(user['downloaded'])))
     if not int(user['downloaded']):
         ratio = 'infinity'
     else:
-        ratio = '%.2f' % (int(user['uploaded']) / int(user['downloaded']))
+        up    = int(user['uploaded'])
+        down  = int(user['downloaded'])
+        ratio = '%0.2f' % (floor((up/down)*100)/100)
     print('Ratio        :', ratio)
     print(Fore.RESET, end='')
 
