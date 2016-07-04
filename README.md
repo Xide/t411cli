@@ -19,29 +19,30 @@ Installation
 
 **t411cli** require **[t411api](https://github.com/Xide/t411api)**, but pip will install it for you.
 
+> You may need to prefix `pipX` / `pythonX` commands with `sudo` 
+
 ### Compatibility
 
-> This code is developped with Python 3.5
-> It sould however be compatible with Python >= 3.2
+This code is developped with Python 3.5 but sould be compatible with Python >= 3.2
 
-### Via pip
+### PyPI package: easy way
 
 ```sh
-# stable version
+# latest release
 pip3 install t411cli
-# upstream versions
+# or upstream version
 pip3 install git+https://git@github.com/Xide/t411cli
 ```
 
-### The basic way
+### Manual way
 
 ```sh
+# upstream version
 git clone git@github.com:Xide/t411cli.git && cd t411cli
 python3 ./setup.py install
 ```
 
 Use this method if you want the latest (maybe less stable) updates.
-
 
 ----------
 Quick Start
@@ -109,10 +110,10 @@ t411 search "query" seed desc # Sort result by number of seeders (default behavi
 t411 top day size asc # Less heavy torrents of the day
 ```
 search options are:
-> size
-> seed
-> leech
-> download
+- size
+- seed
+- leech
+- download
 
 You can order sorting  with **asc** or **desc** specifier.
 
