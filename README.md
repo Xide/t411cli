@@ -7,6 +7,14 @@ T411 CLI
 [![Travis-CI](https://api.travis-ci.org/Xide/t411cli.svg)](https://travis-ci.org/Xide/t411cli)
 
 
+## Deprecated
+
+Since the police raid on t411 team the 26/06/2017, the whole project is unusable.
+Their substitute (currently on t411.si) does not yet offer an API to interact with the system.
+Until something similar is released to the public, this project won't be able to interact with T411
+
+
+
 **t411cli** is a lightweight command line interface / API for T411 written in Python.
 
 ![Interface](https://github.com/Xide/t411cli/blob/master/screenshot.png)
